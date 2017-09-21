@@ -4,6 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.tuxzo.miniprojekt1_indkoebsliste.VarerActivity">
+    tools:context=".VarerActivity">
+
+    <include
+        layout="@layout/toolbar_varer"
+        android:id="@+id/toolbar_vare_activity"
+        />
+
+    <ListView
+        android:id="@+id/vare_list"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+
 
 </android.support.constraint.ConstraintLayout>
