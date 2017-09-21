@@ -1,16 +1,21 @@
 package com.example.tuxzo.miniprojekt1_indkoebsliste;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
+import android.util.Log;
 import android.view.ContextMenu;
+import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Toast;
@@ -77,10 +82,44 @@ public class MainActivity extends AppCompatActivity {
 //                Toast.makeText(this, "Delete", Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.item_edit:
-                Toast.makeText(this, "Edit", Toast.LENGTH_SHORT).show();
+                createEditAlertDialog(Storage.getButik((int)info.id)).show();
+                listAdapter.changeCursor(Storage.getButikker());
+//                Toast.makeText(this, "Edit", Toast.LENGTH_SHORT).show();
                 return true;
             default:
                 return super.onContextItemSelected(item);
         }
+    }
+
+    private AlertDialog createEditAlertDialog(Butik butik)
+    {
+        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = this.getLayoutInflater();
+        alertBuilder.setView(inflater.inflate(R.layout.dialog_redigerbutik, null));
+
+
+        EditText butikName = (EditText) findViewById(R.id.butikName);
+        EditText butikAdresse = (EditText) findViewById(R.id.butikAdresse);
+        EditText butikHomepage = (EditText) findViewById(R.id.butikHomepage);
+
+        Log.d("AlerDialogFields", butikName.toString());
+//        butikName.setText(butik.getName());
+//        butikAdresse.setText(butik.getAdresse());
+//        butikHomepage.setText(butik.getHomepage());
+
+        alertBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                // User clicked OK button
+            }
+        });
+        alertBuilder.setNegativeButton("Annuler", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                // User cancelled the dialog
+            }
+        });
+        alertBuilder.setMessage("Rediger Butik");
+        AlertDialog dialog = alertBuilder.create();
+
+        return dialog;
     }
 }
