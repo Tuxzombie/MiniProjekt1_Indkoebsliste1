@@ -9,11 +9,25 @@ public class Vare {
     private double normalPris;
     private int mængde;
 
+    public static final Vare[] varer = {
+            new Vare("Leverpostysch", 14.95, 5),
+            new Vare("Makreal", 14.95, 5),
+            new Vare("Gammel Ole", 14.95, 5)
+    };
+
+    // ================================================================================
+    // CONSTRUCTOR:
+    // ================================================================================
+
     public Vare(String name, double normalPris, int mængde) {
         this.name = name;
         this.normalPris = normalPris;
         this.mængde = mængde;
     }
+
+    // ================================================================================
+    // GETTERS AND SETTERS
+    // ================================================================================
 
     public double getNormalPris() {
         return normalPris;
@@ -39,4 +53,5 @@ public class Vare {
     public void setName(String name) {
         this.name = name;
     }
+
 }
