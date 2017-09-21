@@ -8,7 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import java.util.Calendar;
 
 /**
- * Created by tuxzo on 20-09-2017.
+ * Created by tuxzo on 21-09-2017.
  */
 
 public class DatabaseHelper extends SQLiteOpenHelper {
@@ -40,25 +40,24 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         updateMyDatabase(db, oldVersion, newVersion);
     }
 
-
-
     private void updateMyDatabase(SQLiteDatabase db, int oldVersion, int newVersion) {
         if (oldVersion < 1) {
             db.execSQL("CREATE TABLE BUTIK (_id INTEGER PRIMARY KEY AUTOINCREMENT, "
                     + "NAME TEXT, "
                     + "ADRESSE TEXT, "
-                    + "HOMEPAGE TEXT;");
+                    + "HOMEPAGE TEXT);");
 
             //TODO: Skal mængde ikke være et antal man har tænkt sig at købe? eller skal det være et antal af dem der er
             db.execSQL("CREATE TABLE VARE (_id INTEGER PRIMARY KEY AUTOINCREMENT, "
                     + "NAME TEXT, "
                     + "NORMALPRIS REAL, "
-                    + "MAENGDE INTEGER;");
+                    + "MAENGDE INTEGER, "
+                    + "BUTIK_ID INTEGER);");
 
+            //TODO: Skal der være mere end en vare og om checkboksen er vinget af?
             db.execSQL("CREATE TABLE INDKOEBSLISTE (_id INTEGER PRIMARY KEY AUTOINCREMENT, "
-                    + "NAME TEXT, "
-                    + "ADRESSE TEXT, "
-                    + "HOMEPAGE TEXT;");
+                    + "VARE_ID INTEGER, "
+                    + "ISCHECKED INTEGER);");
         }
         if (oldVersion < 2) {
             //TODO: skal vi bruge version til noget? som ekstra colum eller ligende :)

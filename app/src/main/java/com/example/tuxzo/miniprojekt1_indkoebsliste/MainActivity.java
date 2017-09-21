@@ -12,34 +12,46 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.SimpleCursorAdapter;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
+    private SimpleCursorAdapter listAdapter;
+    private ListView listView;
+    public static Storage storage;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        storage = new Storage(getApplicationContext());
+        Storage.createButikker();
+
         getSupportActionBar().setTitle("Liste Over Butikker");
 
-        ListView listView = (ListView) findViewById(R.id.listButikker);
-        final ArrayList<Butik> butikker = Storage.createButikker();
-        ArrayAdapter<Butik> arrayAdapter = new ArrayAdapter<Butik>(this, android.R.layout.simple_expandable_list_item_1, butikker);
-        listView.setAdapter(arrayAdapter);
+        listView = (ListView) findViewById(R.id.listButikker);
+
+        listAdapter = new SimpleCursorAdapter(this,
+                android.R.layout.simple_list_item_1,
+                Storage.getButikker(),
+                new String[]{"NAME", "ADRESSE", "HOMEPAGE"},
+                new int[]{android.R.id.text1},
+                0);
+
+        listView.setAdapter(listAdapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent,
                                     View view, int position, long id) {
-
                 startActivity(new Intent(getApplicationContext(),
                         VarerActivity.class)
-                        .putExtra("Butik", Storage.getButik(position)));
-      //        Toast.makeText(parent.getContext(), Storage.getButik(position).toString(), Toast.LENGTH_SHORT).show();
-
+                        .putExtra("Butik", Storage.getButik((int)id)));
+//              Toast.makeText(parent.getContext(), Storage.getButik((int)id).toString(), Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -60,7 +72,9 @@ public class MainActivity extends AppCompatActivity {
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
         switch (item.getItemId()) {
             case R.id.item_delete:
-                Toast.makeText(this, "Delete", Toast.LENGTH_SHORT).show();
+                Storage.removeButik((int)info.id);
+                listAdapter.changeCursor(Storage.getButikker());
+//                Toast.makeText(this, "Delete", Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.item_edit:
                 Toast.makeText(this, "Edit", Toast.LENGTH_SHORT).show();
