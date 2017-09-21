@@ -49,10 +49,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     + "ADRESSE TEXT, "
                     + "HOMEPAGE TEXT;");
 
+            //TODO: Skal mængde ikke være et antal man har tænkt sig at købe? eller skal det være et antal af dem der er
             db.execSQL("CREATE TABLE VARE (_id INTEGER PRIMARY KEY AUTOINCREMENT, "
                     + "NAME TEXT, "
-                    + "ADRESSE TEXT, "
-                    + "HOMEPAGE TEXT;");
+                    + "NORMALPRIS REAL, "
+                    + "MAENGDE INTEGER;");
 
             db.execSQL("CREATE TABLE INDKOEBSLISTE (_id INTEGER PRIMARY KEY AUTOINCREMENT, "
                     + "NAME TEXT, "
