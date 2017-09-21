@@ -102,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
         EditText butikAdresse = (EditText) findViewById(R.id.butikAdresse);
         EditText butikHomepage = (EditText) findViewById(R.id.butikHomepage);
 
-        Log.d("AlerDialogFields", butikName.toString());
+//        Log.d("AlerDialogFields", butikName.toString());
 //        butikName.setText(butik.getName());
 //        butikAdresse.setText(butik.getAdresse());
 //        butikHomepage.setText(butik.getHomepage());
