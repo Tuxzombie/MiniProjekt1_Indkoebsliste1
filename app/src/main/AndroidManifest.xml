@@ -16,7 +16,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".VarerActivity"></activity>
+        <activity android:name=".VarerActivity" />
+        <activity android:name=".InkoebslisteActivity"></activity>
     </application>
 
 </manifest>
