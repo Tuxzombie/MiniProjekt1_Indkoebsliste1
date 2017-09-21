@@ -8,28 +8,30 @@ import java.util.ArrayList;
  */
 
 public class IndkoebsListe {
-    private ArrayList<Vare> vareListe;
-    private Butik butik;
+//    private ArrayList<Vare> vareListe;
+//    private Butik butik;
 
-    public IndkoebsListe(Butik butik) {
-        this.butik = butik;
+//    public IndkoebsListe(Butik butik) {
+//        this.butik = butik;
         // vareListe = new ArrayList<Vare>();
-    }
+ //   }
 
-    public Butik getButik() {
-        return butik;
-    }
+   // public Butik getButik()
+    // {
+       // return butik;
+    //}
 
-    public void setButik(Butik butik) {
-        this.butik = butik;
-    }
+   // public void setButik(Butik butik)
+    // {
+       // this.butik = butik;
+    //}
 
-    public ArrayList<Vare> getVareliste() {
-        return vareListe;
-    }
+ //   public ArrayList<Vare> getVareliste() {
+ //       return vareListe;
+//    }
 
-    public void addVareToVareliste(Vare v) {
-        vareListe.add(v);
-    }
+  //  public void addVareToVareliste(Vare v) {
+    //    vareListe.add(v);
+   // }
 
 }

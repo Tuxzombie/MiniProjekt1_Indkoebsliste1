@@ -6,9 +6,6 @@
     android:layout_height="match_parent"
     tools:context="com.example.tuxzo.miniprojekt1_indkoebsliste.InkoebslisteActivity">
 
-    <include
-        layout="@r"
-        android:id="@+id/tbIndkoebsliste" />
 
     <ListView
         android:layout_width="368dp"
