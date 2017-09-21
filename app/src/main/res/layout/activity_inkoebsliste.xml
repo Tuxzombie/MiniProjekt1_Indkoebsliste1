@@ -7,7 +7,7 @@
     tools:context="com.example.tuxzo.miniprojekt1_indkoebsliste.InkoebslisteActivity">
 
     <include
-        layout="@layout/toolbarIndkoebsliste"
+        layout="@layout/toolbar_indkoebsliste"
         android:id="@+id/tbIndkoebsliste" />
 
     <ListView
