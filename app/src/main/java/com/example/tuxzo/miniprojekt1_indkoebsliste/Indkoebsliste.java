@@ -12,7 +12,7 @@ public class Indkoebsliste {
 
     public Indkoebsliste(String butik) {
         this.butik = butik;
-        // vareListe = new ArrayList<Vare>();
+        vareListe = new ArrayList<String>();
     }
 
     public String getButik() {
@@ -30,5 +30,7 @@ public class Indkoebsliste {
     public void addVareToVareliste(String v) {
         vareListe.add(v);
     }
+
+    public String getVare(int position) { return vareListe.get(position); }
 
 }

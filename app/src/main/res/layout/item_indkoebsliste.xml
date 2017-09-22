@@ -6,17 +6,17 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/tvButik"
+        android:id="@+id/tvVare"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TextView"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="16dp"
-        app:layout_constraintLeft_toRightOf="@+id/checkBox2"
+        app:layout_constraintLeft_toRightOf="@+id/cbErKoebt"
         android:layout_marginLeft="8dp" />
 
     <CheckBox
-        android:id="@+id/checkBox2"
+        android:id="@+id/cbErKoebt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
@@ -29,11 +29,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TextView"
-        tools:layout_editor_absoluteY="16dp"
-        app:layout_constraintLeft_toRightOf="@+id/tvButik"
+        app:layout_constraintLeft_toRightOf="@+id/tvVare"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintHorizontal_bias="0.962" />
+        app:layout_constraintHorizontal_bias="0.96"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="16dp" />
 
 </android.support.constraint.ConstraintLayout>
