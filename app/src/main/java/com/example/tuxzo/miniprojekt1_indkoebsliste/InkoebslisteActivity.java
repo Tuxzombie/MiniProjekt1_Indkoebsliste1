@@ -41,6 +41,16 @@ public class InkoebslisteActivity extends AppCompatActivity {
         ListView lvIndkoebsListe = (ListView) findViewById(R.id.lvIndkoebsliste);
         ArrayAdapter<String> listAdapter = new CustomListAdapter(this, dummyIndkoebsliste.getVareliste());
         lvIndkoebsListe.setAdapter(listAdapter);
+
+        /* TODO Udregning af total pris
+
+        for (int i = 0; i < dummyIndkoebsliste.getVareliste().size(); i ++) {
+
+        }*/
+
+        TextView tvTotalPris = (TextView) findViewById(R.id.tvTotalPris);
+        tvTotalPris.setText("30 ,-");
+
     }
 
     @Override
@@ -106,4 +116,3 @@ public class InkoebslisteActivity extends AppCompatActivity {
         };
     }
 }
-
