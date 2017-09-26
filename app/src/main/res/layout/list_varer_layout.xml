@@ -3,17 +3,53 @@
     android:orientation="horizontal" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView android:id="@+id/text1"
-        android:layout_width="match_parent"
+    <LinearLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp" />
+        android:orientation="vertical"
+        android:weightSum="1">
 
-    <TextView android:id="@+id/text2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        <TextView android:id="@+id/vareNavnText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="text3"
+            android:layout_weight="2.31" />
 
-    <TextView android:id="@+id/text3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        <TextView android:id="@+id/varePrisText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="text3"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_minus"
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:gravity="center"
+            android:text="-" />
+
+        <TextView
+            android:layout_width="22dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:textAlignment="center"
+            android:text="0" />
+
+        <Button
+            android:id="@+id/btn_plus"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:background="@android:color/transparent"
+            android:gravity="center"
+            android:text="+" />
+    </LinearLayout>
+
 
 </LinearLayout>

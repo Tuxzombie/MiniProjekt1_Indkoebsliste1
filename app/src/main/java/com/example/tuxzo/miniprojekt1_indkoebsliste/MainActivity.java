@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         storage = new Storage(getApplicationContext());
-        Storage.createButikker();
+        storage.createButikker();
 
         getSupportActionBar().setTitle("Liste Over Butikker");
 
@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
 
         listAdapter = new SimpleCursorAdapter(this,
                 android.R.layout.simple_list_item_1,
-                Storage.getButikker(),
+                storage.getButikker(),
                 new String[]{"NAME", "ADRESSE", "HOMEPAGE"},
                 new int[]{android.R.id.text1},
                 0);
@@ -55,7 +55,8 @@ public class MainActivity extends AppCompatActivity {
                                     View view, int position, long id) {
                 startActivity(new Intent(getApplicationContext(),
                         VarerActivity.class)
-                        .putExtra("Butik", Storage.getButik((int)id)));
+                        .putExtra(VarerActivity.EXTRA_BUTIK, storage.getButik((int)id))
+                        .putExtra(VarerActivity.EXTRA_BUTIK_ID, id + ""));
 //              Toast.makeText(parent.getContext(), Storage.getButik((int)id).toString(), Toast.LENGTH_SHORT).show();
             }
         });

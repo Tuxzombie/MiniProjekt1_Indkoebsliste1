@@ -8,21 +8,17 @@ public class Vare {
     private String name;
     private double normalPris;
     private int mængde;
-
-    public static final Vare[] varer = {
-            new Vare("Leverpostysch", 14.95, 5),
-            new Vare("Makreal", 14.95, 5),
-            new Vare("Gammel Ole", 14.95, 5)
-    };
+    private int butikId;
 
     // ================================================================================
     // CONSTRUCTOR:
     // ================================================================================
 
-    public Vare(String name, double normalPris, int mængde) {
+    public Vare(String name, double normalPris, int mængde, int butikId) {
         this.name = name;
         this.normalPris = normalPris;
         this.mængde = mængde;
+        this.butikId = butikId;
     }
 
     // ================================================================================
@@ -54,4 +50,11 @@ public class Vare {
         this.name = name;
     }
 
+    public int getButikId() {
+        return butikId;
+    }
+
+    public void setButikId(int butikId) {
+        this.butikId = butikId;
+    }
 }

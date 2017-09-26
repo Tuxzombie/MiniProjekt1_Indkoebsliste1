@@ -6,11 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".VarerActivity">
 
-    <include
-        layout="@layout/toolbar_varer"
-        android:id="@+id/toolbar_vare_activity"
-        />
-
     <ListView
         android:id="@+id/list_varer"
         android:layout_width="wrap_content"
