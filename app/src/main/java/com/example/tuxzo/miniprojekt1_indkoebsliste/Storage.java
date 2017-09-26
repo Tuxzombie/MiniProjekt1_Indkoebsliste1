@@ -75,7 +75,7 @@ public class Storage {
     //
     public static void createVarer() {
         db.delete("VARE", null, null);
-        Cursor cursor = MainActivity.storage.getButikker();
+        Cursor cursor = getButikker();
         cursor.moveToFirst();
 
         int temp = Integer.parseInt(cursor.getString(cursor.getColumnIndex("_id")));
@@ -148,37 +148,34 @@ public class Storage {
 //        db.update("BUTIK", vareValues, "_id=?", new String[]{_id+""});
 //    }
 //
-//    public static void createLister()
-//    {
-//        db.delete("INDKOEBSLISTE",null,null);
-//
-////        addListe(new IndkoebsListe());
-//    }
-//
-//    public static Cursor getLister()
-//    {
-//        return db.query("INDKOEBSLISTE",null,null,null,null,null,null);
-//    }
-//
-//    public static IndkoebsListe getListe(int _id)
-//    {
-//        IndkoebsListe liste = null;
-//        return liste;
-//    }
-//
-//    public static void addListe(Liste liste)
-//    {
-//
-//    }
-//
-//    public static void removeListe(int _id)
-//    {
-//        db.delete("INDKOEBSLISTE", "_id ="+_id, null);
-//    }
-//
-//    public static void updateListe(int _id, IndkoebsListe liste)
-//    {
-//
-//    }
+    public static void addVareTilIndkoebsliste(int id, int antal) {
+        ContentValues vareValue = new ContentValues();
+        vareValue.put("VARE_ID", id);
+        vareValue.put("ANTAL", antal);
+        vareValue.put("ISCHECKED", 0);
+        db.insert("INDKOEBSLISTE", null, vareValue);
+    }
+
+    public static void insertVarerIIndkoebsliste() {
+        db.delete("INDKOEBSLISTE",null,null);
+
+        Cursor cursor = getButikker();
+        cursor.moveToFirst();
+        int tempButik = Integer.parseInt(cursor.getString(cursor.getColumnIndex("_id")));
+
+        Cursor cursor2 = getVarer(tempButik);
+        cursor2.moveToFirst();
+        int tempVare = Integer.parseInt(cursor.getString(cursor2.getColumnIndex("_id")));
+
+        addVareTilIndkoebsliste(tempVare, 2);
+    }
+
+    public static Cursor getVarerIListe() {
+        return db.query("INDKOEBSLISTE",null,null,null,null,null,null);
+    }
+
+    public static void removeVareFraIndkoebsliste(int id) {
+        db.delete("INDKOEBSLISTE", "_id =" + id, null);
+    }
 }
 

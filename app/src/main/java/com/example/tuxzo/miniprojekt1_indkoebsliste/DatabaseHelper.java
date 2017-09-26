@@ -1,11 +1,9 @@
 package com.example.tuxzo.miniprojekt1_indkoebsliste;
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-
-import java.util.Calendar;
+import android.util.Log;
 
 /**
  * Created by tuxzo on 21-09-2017.
@@ -16,17 +14,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static DatabaseHelper sInstance;
 
     private static final String DB_NAME = "miniprojekt1"; // the name of our database
-    private static final int DB_VERSION = 2; // the version of the database
+    private static final int DB_VERSION = 1; // the version of the database
 
-    DatabaseHelper(Context context) {
+    private DatabaseHelper(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
     }
-
 
     public static synchronized DatabaseHelper getInstance(Context context) {
           if (sInstance == null) {
             sInstance = new DatabaseHelper(context.getApplicationContext());
         }
+        Log.d("DB: ", sInstance.toString());
         return sInstance;
     }
 
@@ -41,7 +39,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     private void updateMyDatabase(SQLiteDatabase db, int oldVersion, int newVersion) {
-        if (oldVersion < 1) {
+
             db.execSQL("CREATE TABLE BUTIK (_id INTEGER PRIMARY KEY AUTOINCREMENT, "
                     + "NAME TEXT, "
                     + "ADRESSE TEXT, "
@@ -59,11 +57,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     + "VARE_ID INTEGER, "
                     + "ISCHECKED INTEGER);");
 
-            Storage.createButikker();
-            Storage.createVarer();
-        }
-        if (oldVersion < 2) {
-            //TODO: skal vi bruge version til noget? som ekstra colum eller ligende :)
-        }
+
+
     }
 }
