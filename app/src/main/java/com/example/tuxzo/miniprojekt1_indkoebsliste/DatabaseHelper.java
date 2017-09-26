@@ -58,6 +58,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             db.execSQL("CREATE TABLE INDKOEBSLISTE (_id INTEGER PRIMARY KEY AUTOINCREMENT, "
                     + "VARE_ID INTEGER, "
                     + "ISCHECKED INTEGER);");
+
+            Storage.createButikker();
+            Storage.createVarer();
         }
         if (oldVersion < 2) {
             //TODO: skal vi bruge version til noget? som ekstra colum eller ligende :)

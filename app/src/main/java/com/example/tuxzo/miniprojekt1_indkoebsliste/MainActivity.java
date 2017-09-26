@@ -30,7 +30,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         storage = new Storage(getApplicationContext());
-        storage.createButikker();
 
         getSupportActionBar().setTitle("Liste Over Butikker");
 
