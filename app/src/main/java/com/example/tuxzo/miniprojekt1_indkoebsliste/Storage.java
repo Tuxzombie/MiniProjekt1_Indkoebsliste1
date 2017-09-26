@@ -53,6 +53,15 @@ public class Storage {
 
     public static void removeButik(int _id) {
         db.delete("BUTIK", "_id =" + _id, null);
+
+        Cursor cursor = getVarer(_id);
+
+        cursor.moveToFirst();
+        while(!cursor.isAfterLast())
+        {
+            removeVare(Integer.parseInt(cursor.getString(cursor.getColumnIndex("_id"))));
+            cursor.moveToNext();
+        }
     }
 
     public static void updateButik(int _id, Butik butik) {
@@ -124,11 +133,11 @@ public class Storage {
         vareValues.put("BUTIK_ID", vare.getButikId());
         db.insert("VARE", null, vareValues);
     }
-//
-//    public static void removeVare(int _id)
-//    {
-//        db.delete("VARE", "_id ="+_id, null);
-//    }
+
+    public static void removeVare(int _id)
+    {
+        db.delete("VARE", "_id ="+_id, null);
+    }
 //
 //    public static void updateVare(int _id, Vare vare)
 //    {
