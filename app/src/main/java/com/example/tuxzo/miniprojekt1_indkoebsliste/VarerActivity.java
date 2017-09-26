@@ -10,12 +10,13 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class VarerActivity extends AppCompatActivity {
-//    public static final String EXTRA_BUTIK = "butikObjekt";
     public static final String EXTRA_BUTIK_ID = "butikId";
 
     private SimpleCursorAdapter listAdapter;
@@ -58,10 +59,9 @@ public class VarerActivity extends AppCompatActivity {
             Toast toast = Toast.makeText(this, "Database unavailable", Toast.LENGTH_SHORT);
             toast.show();
         }
-        //================================================================================
-        // BUTTON EVENTHANDLERS:
-        //================================================================================
 
+
+        registerForContextMenu(listView);
 
 
 //        listAdapter = new SimpleCursorAdapter(this,
@@ -94,5 +94,28 @@ public class VarerActivity extends AppCompatActivity {
 
         // Assign listener to listview
 //        listDrinks.setOnItemClickListener(itemClickListener);
+    }
+
+    //================================================================================
+    // BUTTON EVENTHANDLERS:
+    //================================================================================
+    public void incrementEventhandler(View view) {
+        TextView txtMaengde = (TextView) findViewById(R.id.textMaengde);
+        int currentValue = Integer.parseInt((String) txtMaengde.getText());
+        currentValue++;
+        txtMaengde.setText(currentValue + "");
+    }
+
+    public void decrementEventhandler(View view) {
+        TextView txtMaengde = (TextView) findViewById(R.id.textMaengde);
+        int currentValue = Integer.parseInt((String) txtMaengde.getText());
+        if(currentValue > 0) {
+            currentValue--;
+            txtMaengde.setText(currentValue + "");
+        }
+    }
+
+    public void tilfoejEventhandler(View view) {
+
     }
 }
