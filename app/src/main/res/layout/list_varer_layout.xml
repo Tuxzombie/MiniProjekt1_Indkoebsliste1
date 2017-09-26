@@ -27,8 +27,11 @@
         android:text="text3"
         app:layout_constraintLeft_toRightOf="@+id/vareNavnText"
         app:layout_constraintRight_toLeftOf="@+id/btn_minus"
-        tools:layout_editor_absoluteY="247dp"
-        app:layout_constraintHorizontal_bias="0.42" />
+        app:layout_constraintHorizontal_bias="0.42"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="8dp" />
 
 
     <Button
@@ -94,12 +97,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="kr."
-        tools:layout_editor_absoluteY="247dp"
         app:layout_constraintRight_toLeftOf="@+id/btn_minus"
         android:layout_marginRight="8dp"
         app:layout_constraintLeft_toRightOf="@+id/varePrisText"
         android:layout_marginLeft="8dp"
-        app:layout_constraintHorizontal_bias="0.0" />
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="8dp" />
 
 
 </android.support.constraint.ConstraintLayout>
