@@ -108,10 +108,10 @@ public class Storage {
     {
         return db.query("VARE",null,"BUTIK_ID = ?",new String[] {butiksId + ""},null,null,null);
     }
-//
+
     public static Vare getVare(int _id)
     {
-        Cursor vareCursor = db.query("BUTIK",
+        Cursor vareCursor = db.query("VARE",
                 new String[]{"NAME", "NORMALPRIS", "MAENGDE", "BUTIK_ID"},
                 "_id=?",
                 new String[]{""+_id},
@@ -122,7 +122,6 @@ public class Storage {
                 vareCursor.getInt(vareCursor.getColumnIndex("MAENGDE")), _id);
        return vare;
     }
-//
 
     public static void addVare(Vare vare) {
         ContentValues vareValues = new ContentValues();
@@ -175,7 +174,7 @@ public class Storage {
     }
 
     public static void removeVareFraIndkoebsliste(int id) {
-        db.delete("INDKOEBSLISTE", "_id =" + id, null);
+        db.delete("INDKOEBSLISTE", "VARE_ID =" + id, null);
     }
 }
 

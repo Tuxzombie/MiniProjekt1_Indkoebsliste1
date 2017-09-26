@@ -27,7 +27,7 @@ public class ButikActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_butik);
 
-        getSupportActionBar().setTitle("Liste Over Butikker");
+//        getSupportActionBar().setTitle("Liste Over Butikker");
 
         listView = (ListView) findViewById(R.id.listButikker);
 

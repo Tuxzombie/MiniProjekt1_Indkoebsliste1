@@ -55,9 +55,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             //TODO: Skal der være mere end en vare og om checkboksen er vinget af?
             db.execSQL("CREATE TABLE INDKOEBSLISTE (_id INTEGER PRIMARY KEY AUTOINCREMENT, "
                     + "VARE_ID INTEGER, "
+                    + "ANTAL INTEGER, "
                     + "ISCHECKED INTEGER);");
-
-
 
     }
 }

@@ -5,10 +5,7 @@
     <item
         android:id="@+id/action_tilButik"
         android:icon="@mipmap/ic_launcher"
-        android:title="Til butik"
+        android:title="Gå til butikker"
         app:showAsAction="always"/>
 
-    <item android:id="@+id/action_mere"
-        android:title="Mere"
-        app:showAsAction="never"/>
 </menu>

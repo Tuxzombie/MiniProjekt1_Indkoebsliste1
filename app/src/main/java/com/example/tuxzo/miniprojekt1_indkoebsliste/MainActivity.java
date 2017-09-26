@@ -2,11 +2,11 @@ package com.example.tuxzo.miniprojekt1_indkoebsliste;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -43,11 +43,8 @@ public class MainActivity extends AppCompatActivity {
         ArrayList<Vare> vArrayList = new ArrayList<Vare>();
         for(vCursor.moveToFirst(); !vCursor.isAfterLast(); vCursor.moveToNext()) {
             Vare tempVare = storage.getVare(vCursor.getColumnIndex("VARE_ID"));
-            Log.d("Vare: ", tempVare + "");
             vArrayList.add(tempVare);
         }
-
-        Log.d("Liste over vare: ", vArrayList.toString());
 
         ListView lvIndkoebsListe = (ListView) findViewById(R.id.lvIndkoebsliste);
         ArrayAdapter<Vare> listAdapter = new CustomListAdapter(this, vArrayList);
@@ -74,13 +71,11 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_tilButik:
+                Intent intent = new Intent(this, ButikActivity.class);
+                startActivity(intent);
                 return true;
-
-            case R.id.action_mere:
-                return true;
-
             default:
-                return super.onOptionsItemSelected(item);
+                return false;
         }
     }
 

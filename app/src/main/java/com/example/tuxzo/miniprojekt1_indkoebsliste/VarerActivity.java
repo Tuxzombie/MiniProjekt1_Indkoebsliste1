@@ -31,8 +31,8 @@ public class VarerActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_varer);
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setTitle("Varer i " + Storage.getButik(butikId).getName());
+        // actionBar.setDisplayHomeAsUpEnabled(true);
+        // actionBar.setTitle("Varer i " + Storage.getButik(butikId).getName());
         storage.createVarer();
 
 
