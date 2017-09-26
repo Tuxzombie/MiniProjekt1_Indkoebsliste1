@@ -48,7 +48,6 @@ public class MainActivity extends AppCompatActivity {
                                     View view, int position, long id) {
                 startActivity(new Intent(getApplicationContext(),
                         VarerActivity.class)
-                        .putExtra(VarerActivity.EXTRA_BUTIK, storage.getButik((int)id))
                         .putExtra(VarerActivity.EXTRA_BUTIK_ID, id + ""));
 //              Toast.makeText(parent.getContext(), Storage.getButik((int)id).toString(), Toast.LENGTH_SHORT).show();
             }

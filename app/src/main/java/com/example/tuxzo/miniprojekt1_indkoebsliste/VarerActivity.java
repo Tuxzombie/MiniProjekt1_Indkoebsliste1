@@ -8,18 +8,19 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Toast;
 
 public class VarerActivity extends AppCompatActivity {
-    public static final String EXTRA_BUTIK = "butikObjekt";
+//    public static final String EXTRA_BUTIK = "butikObjekt";
     public static final String EXTRA_BUTIK_ID = "butikId";
 
     private SimpleCursorAdapter listAdapter;
     private ListView listView;
-    private Storage storage = MainActivity.storage;
+    public Storage storage = MainActivity.storage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,12 +32,12 @@ public class VarerActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
 
-        Butik butikObject = (Butik) getIntent().getSerializableExtra(EXTRA_BUTIK);
+        int butikId = Integer.parseInt(getIntent().getStringExtra(EXTRA_BUTIK_ID));
 
         setContentView(R.layout.activity_varer);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setTitle("Varer i " + butikObject.getName());
+        actionBar.setTitle("Varer i " + Storage.getButik(butikId).getName());
         storage.createVarer();
 
 
@@ -49,7 +50,7 @@ public class VarerActivity extends AppCompatActivity {
         try {
             listAdapter = new SimpleCursorAdapter(this,
                     R.layout.list_varer_layout,
-                    storage.getVarer(),
+                    Storage.getVarer(butikId),
                     new String[] {"NAME", "NORMALPRIS"},
                     new int[] {R.id.vareNavnText, R.id.varePrisText}, 0);
             listView.setAdapter(listAdapter);
@@ -58,8 +59,9 @@ public class VarerActivity extends AppCompatActivity {
             toast.show();
         }
         //================================================================================
-        //
+        // BUTTON EVENTHANDLERS:
         //================================================================================
+
 
 
 //        listAdapter = new SimpleCursorAdapter(this,

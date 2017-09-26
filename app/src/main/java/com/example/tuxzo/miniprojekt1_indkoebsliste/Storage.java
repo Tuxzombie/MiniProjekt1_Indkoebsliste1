@@ -63,47 +63,51 @@ public class Storage {
         db.update("BUTIK", butikValues, "_id=?", new String[]{_id + ""});
     }
 
+    //
     public static void createVarer() {
         db.delete("VARE", null, null);
-//
+        Cursor cursor = MainActivity.storage.getButikker();
+        cursor.moveToFirst();
+        cursor.moveToNext();
+
+        int temp = Integer.parseInt(cursor.getString(cursor.getColumnIndex("1")));
+
 //        //TODO: Kender ik standard construtor så her skal der nok rettes
-        addVare(new Vare("Mini Baby Bel", 26.50, 15, 1));
-//        addVare(new Vare("Agurk", "6.00", "200").setButik());
-//        addVare(new Vare("Kløver Vaseline", "22.95", "200").setButik());
-//        addVare(new Vare("Dansk broccoli", "12.00", "60").setButik());
-//        addVare(new Vare("Rød Spidskål", "18.00", "80").setButik());
-//        addVare(new Vare("Økologiske æg", "27.95", "24").setButik());
-//        addVare(new Vare("Hakket Oksekød", "30.00", "80").setButik());
-//        addVare(new Vare("Lille Grillkasse", "149.00", "45").setButik());
-//        addVare(new Vare("Mustang Marie - Basis hverdagscykel", "1499.00", "15").setButik());
-//        addVare(new Vare("Væksthus", "799.00", "95").setButik());
-//        addVare(new Vare("Cirkeline som slaskedukke", "129.95", "46").setButik());
+        addVare(new Vare("Mini Baby Bel", 26.50, 15, temp));
+        addVare(new Vare("Agurk", 6.00, 200, temp));
+        addVare(new Vare("Kløver Vaseline", 22.95, 200, temp));
+        addVare(new Vare("Dansk broccoli", 12.00, 60, temp));
+        addVare(new Vare("Rød Spidskål", 18.00, 80, temp));
+        addVare(new Vare("Økologiske æg", 27.95, 24, temp));
+        addVare(new Vare("Hakket Oksekød", 30.00, 80, 2));
+        addVare(new Vare("Lille Grillkasse", 149.00, 45, 2));
+        addVare(new Vare("Mustang Marie - Basis hverdagscykel", 1499.00, 15, 2));
+        addVare(new Vare("Væksthus", 799.00, 95, 2));
+        addVare(new Vare("Cirkeline som slaskedukke", 129.95, 46, 3));
 //        addVare(new Vare("Singer symaskine - Simple 3223 - Hvid og lilla", "999.00", "5").setButik());
 //        addVare(new Vare("LEGO Star Wars Darth Vader", "249.95", "120").setButik());
 //        addVare(new Vare("LEGO Friends Stephanies hus", "486.00", "45").setButik());
 //        addVare(new Vare("LEGO Elves dragedronningens redning", "649.00", "20").setButik());
     }
 //
-    public static Cursor getVarer()
+    public static Cursor getVarer(int butiksId)
     {
-        return db.query("VARE",null,null,null,null,null,null);
+        return db.query("VARE",null,"BUTIK_ID = ?",new String[] {butiksId + ""},null,null,null);
     }
 //
-//    public static Vare getVare(int _id)
-//    {
-//        Cursor vareCursor = db.query("BUTIK",
-//                new String[]{"NAME", "NORMALPRIS", "MAENGDE", "BUTIK_ID"},
-//                "_id=?",
-//                new String[]{""+_id},
-//                null,null,null);
-//        vareCursor.moveToFirst();
-//        //TODO: Kender ik standard construtor så her skal der nok rettes
-//        Vare vare = new Vare(vareCursor.getString(vareCursor.getColumnIndex("NAME")),
-//                vareCursor.getString(vareCursor.getColumnIndex("NORMALPRIS")),
-//                vareCursor.getString(vareCursor.getColumnIndex("MAENGDE")));
-//        vare.setButik(getButik(Integer.parseInt(vareCursor.getString(vareCursor.getColumnIndex("BUTIK_ID")))));
-//        return vare;
-//    }
+    public static Vare getVare(int _id)
+    {
+        Cursor vareCursor = db.query("BUTIK",
+                new String[]{"NAME", "NORMALPRIS", "MAENGDE", "BUTIK_ID"},
+                "_id=?",
+                new String[]{""+_id},
+                null,null,null);
+        vareCursor.moveToFirst();
+        Vare vare = new Vare(vareCursor.getString(vareCursor.getColumnIndex("NAME")),
+                vareCursor.getDouble(vareCursor.getColumnIndex("NORMALPRIS")),
+                vareCursor.getInt(vareCursor.getColumnIndex("MAENGDE")), _id);
+       return vare;
+    }
 //
 
     public static void addVare(Vare vare) {
