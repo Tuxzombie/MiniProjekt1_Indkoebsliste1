@@ -1,55 +1,105 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="horizontal" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:weightSum="1">
 
         <TextView android:id="@+id/vareNavnText"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
             android:text="text3"
-            android:layout_weight="2.31" />
+            android:layout_weight="2.31"
+            android:layout_marginLeft="8dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="8dp" />
 
-        <TextView android:id="@+id/varePrisText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="text3"/>
-    </LinearLayout>
-
-    <LinearLayout
+    <TextView
+        android:id="@+id/varePrisText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/btn_minus"
-            android:layout_width="40dp"
-            android:layout_height="wrap_content"
-            android:background="@android:color/transparent"
-            android:gravity="center"
-            android:text="-" />
-
-        <TextView
-            android:layout_width="22dp"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:textAlignment="center"
-            android:text="0" />
-
-        <Button
-            android:id="@+id/btn_plus"
-            android:layout_width="40dp"
-            android:layout_height="match_parent"
-            android:background="@android:color/transparent"
-            android:gravity="center"
-            android:text="+" />
-    </LinearLayout>
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:text="text3"
+        app:layout_constraintLeft_toRightOf="@+id/vareNavnText"
+        app:layout_constraintRight_toLeftOf="@+id/btn_minus"
+        tools:layout_editor_absoluteY="247dp"
+        app:layout_constraintHorizontal_bias="0.42" />
 
 
-</LinearLayout>
+    <Button
+        android:id="@+id/btn_minus"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:background="@android:color/transparent"
+        android:gravity="center"
+        android:text="-"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintVertical_bias="0.498"
+        app:layout_constraintRight_toLeftOf="@+id/textView2"
+        android:layout_marginRight="8dp" />
+
+    <TextView
+        android:layout_width="22dp"
+        android:layout_height="32dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:text="0"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:id="@+id/textView2"
+        app:layout_constraintVertical_bias="0.498"
+        app:layout_constraintRight_toLeftOf="@+id/btn_plus"
+        android:layout_marginRight="8dp" />
+
+    <Button
+        android:id="@+id/btn_plus"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:background="@android:color/transparent"
+        android:gravity="center"
+        android:text="+"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintVertical_bias="0.498"
+        app:layout_constraintRight_toLeftOf="@+id/btnTilfoej"
+        android:layout_marginRight="8dp" />
+
+    <Button
+        android:id="@+id/btnTilfoej"
+        android:layout_width="wrap_content"
+        android:layout_height="32dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@android:color/transparent"
+        android:text="Tilføj"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="kr."
+        tools:layout_editor_absoluteY="247dp"
+        app:layout_constraintRight_toLeftOf="@+id/btn_minus"
+        android:layout_marginRight="8dp"
+        app:layout_constraintLeft_toRightOf="@+id/varePrisText"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintHorizontal_bias="0.0" />
+
+
+</android.support.constraint.ConstraintLayout>
