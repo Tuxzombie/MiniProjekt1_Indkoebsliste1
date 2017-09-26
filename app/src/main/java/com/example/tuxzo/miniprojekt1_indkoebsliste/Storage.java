@@ -68,9 +68,8 @@ public class Storage {
         db.delete("VARE", null, null);
         Cursor cursor = MainActivity.storage.getButikker();
         cursor.moveToFirst();
-        cursor.moveToNext();
 
-        int temp = Integer.parseInt(cursor.getString(cursor.getColumnIndex("1")));
+        int temp = Integer.parseInt(cursor.getString(cursor.getColumnIndex("_id")));
 
 //        //TODO: Kender ik standard construtor så her skal der nok rettes
         addVare(new Vare("Mini Baby Bel", 26.50, 15, temp));
@@ -79,15 +78,21 @@ public class Storage {
         addVare(new Vare("Dansk broccoli", 12.00, 60, temp));
         addVare(new Vare("Rød Spidskål", 18.00, 80, temp));
         addVare(new Vare("Økologiske æg", 27.95, 24, temp));
-        addVare(new Vare("Hakket Oksekød", 30.00, 80, 2));
-        addVare(new Vare("Lille Grillkasse", 149.00, 45, 2));
-        addVare(new Vare("Mustang Marie - Basis hverdagscykel", 1499.00, 15, 2));
-        addVare(new Vare("Væksthus", 799.00, 95, 2));
-        addVare(new Vare("Cirkeline som slaskedukke", 129.95, 46, 3));
-//        addVare(new Vare("Singer symaskine - Simple 3223 - Hvid og lilla", "999.00", "5").setButik());
-//        addVare(new Vare("LEGO Star Wars Darth Vader", "249.95", "120").setButik());
-//        addVare(new Vare("LEGO Friends Stephanies hus", "486.00", "45").setButik());
-//        addVare(new Vare("LEGO Elves dragedronningens redning", "649.00", "20").setButik());
+
+        cursor.moveToNext();
+        temp = Integer.parseInt(cursor.getString(cursor.getColumnIndex("_id")));
+        addVare(new Vare("Hakket Oksekød", 30.00, 80, temp));
+        addVare(new Vare("Lille Grillkasse", 149.00, 45, temp));
+        addVare(new Vare("Mustang Marie - Basis hverdagscykel", 1499.00, 15, temp));
+        addVare(new Vare("Væksthus", 799.00, 95, temp));
+        addVare(new Vare("Cirkeline som slaskedukke", 129.95, 46, temp));
+
+        cursor.moveToNext();
+        temp = Integer.parseInt(cursor.getString(cursor.getColumnIndex("_id")));
+        addVare(new Vare("Singer symaskine - Simple 3223 - Hvid og lilla", 999.00, 5, temp));
+        addVare(new Vare("LEGO Star Wars Darth Vader", 249.95, 120, temp));
+        addVare(new Vare("LEGO Friends Stephanies hus", 486.00, 45,temp));
+        addVare(new Vare("LEGO Elves dragedronningens redning", 649.00, 20,temp));
     }
 //
     public static Cursor getVarer(int butiksId)
