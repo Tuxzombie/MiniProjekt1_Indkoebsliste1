@@ -2,6 +2,7 @@ package com.example.tuxzo.miniprojekt1_indkoebsliste;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.sqlite.SQLiteException;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -14,6 +15,7 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -34,10 +36,10 @@ public class MainActivity extends AppCompatActivity {
         listView = (ListView) findViewById(R.id.listButikker);
 
         listAdapter = new SimpleCursorAdapter(this,
-                android.R.layout.simple_list_item_1,
+                R.layout.list_butikker_layout,
                 storage.getButikker(),
                 new String[]{"NAME", "ADRESSE", "HOMEPAGE"},
-                new int[]{android.R.id.text1},
+                new int[]{R.id.butikNameText, R.id.butikAdresseText, R.id.butikHomepageText },
                 0);
 
         listView.setAdapter(listAdapter);
