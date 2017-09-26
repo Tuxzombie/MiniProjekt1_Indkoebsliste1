@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteException;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
@@ -77,8 +78,7 @@ public class MainActivity extends AppCompatActivity {
 //                Toast.makeText(this, "Delete", Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.item_edit:
-                createEditAlertDialog(Storage.getButik((int)info.id)).show();
-                listAdapter.changeCursor(Storage.getButikker());
+                createEditAlertDialog((int)info.id, Storage.getButik((int)info.id)).show();
 //                Toast.makeText(this, "Edit", Toast.LENGTH_SHORT).show();
                 return true;
             default:
@@ -86,25 +86,31 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private AlertDialog createEditAlertDialog(Butik butik)
+    private AlertDialog createEditAlertDialog(int _id, final Butik butik)
     {
+        final int butik_id = _id;
         AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
         LayoutInflater inflater = this.getLayoutInflater();
-        alertBuilder.setView(inflater.inflate(R.layout.dialog_redigerbutik, null));
+        View editView = inflater.inflate(R.layout.dialog_redigerbutik, null);
+        alertBuilder.setView(editView);
 
 
-        EditText butikName = (EditText) findViewById(R.id.butikName);
-        EditText butikAdresse = (EditText) findViewById(R.id.butikAdresse);
-        EditText butikHomepage = (EditText) findViewById(R.id.butikHomepage);
+        final EditText butikName = (EditText) editView.findViewById(R.id.butikName);
+        final EditText butikAdresse = (EditText) editView.findViewById(R.id.butikAdresse);
+        final EditText butikHomepage = (EditText) editView.findViewById(R.id.butikHomepage);
 
-//        Log.d("AlerDialogFields", butikName.toString());
-//        butikName.setText(butik.getName());
-//        butikAdresse.setText(butik.getAdresse());
-//        butikHomepage.setText(butik.getHomepage());
+        butikName.setText(butik.getName());
+        butikAdresse.setText(butik.getAdresse());
+        butikHomepage.setText(butik.getHomepage());
 
         alertBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
-                // User clicked OK button
+                butik.setName(butikName.getText().toString());
+                butik.setAdresse(butikAdresse.getText().toString());
+                butik.setHomepage(butikHomepage.getText().toString());
+
+                Storage.updateButik(butik_id, butik);
+                listAdapter.changeCursor(Storage.getButikker());
             }
         });
         alertBuilder.setNegativeButton("Annuler", new DialogInterface.OnClickListener() {
