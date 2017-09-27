@@ -70,6 +70,11 @@ public class VareCursorAdapter extends SimpleCursorAdapter {
                 TextView tv = (TextView) view.findViewById(R.id.textMaengde);
                 int antal = Integer.parseInt((String) tv.getText());
 
+                Toast.makeText(context, "Tilføjet: " + antal + " stk " +
+                        cursor.getString(cursor.getColumnIndex("NAME")) +
+                        " til " + antal * cursor.getDouble(cursor.getColumnIndex("NORMALPRIS")) +
+                        " kr", Toast.LENGTH_SHORT).show();
+
                 MainActivity.storage.addVareTilIndkoebsliste(vareId, antal , 0);
             }
         });
