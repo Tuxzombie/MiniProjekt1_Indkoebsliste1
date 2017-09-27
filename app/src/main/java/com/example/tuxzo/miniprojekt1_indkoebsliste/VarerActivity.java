@@ -39,9 +39,9 @@ public class VarerActivity extends AppCompatActivity {
 
         int butikId = Integer.parseInt(getIntent().getStringExtra(EXTRA_BUTIK_ID));
         setContentView(R.layout.activity_varer);
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setTitle("Varer i " + Storage.getButik(butikId).getName());
+        // ActionBar actionBar = getSupportActionBar();
+       // actionBar.setDisplayHomeAsUpEnabled(true);
+        //actionBar.setTitle("Varer i " + Storage.getButik(butikId).getName());
         storage.createVarer();
 
 
