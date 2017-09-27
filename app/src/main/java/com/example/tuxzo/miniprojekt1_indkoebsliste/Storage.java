@@ -94,7 +94,6 @@ public class Storage {
 
         int temp = Integer.parseInt(cursor.getString(cursor.getColumnIndex("_id")));
 
-//        //TODO: Kender ik standard construtor så her skal der nok rettes
         addVare(new Vare("Mini Baby Bel", 26.50, 15, temp));
         addVare(new Vare("Agurk", 6.00, 200, temp));
         addVare(new Vare("Kløver Vaseline", 22.95, 200, temp));
@@ -178,9 +177,12 @@ public class Storage {
 
         Cursor cursor2 = getVarer(tempButik);
         cursor2.moveToFirst();
-        int tempVare = Integer.parseInt(cursor.getString(cursor2.getColumnIndex("_id")));
+        int tempVare = Integer.parseInt(cursor2.getString(cursor2.getColumnIndex("_id")));
 
         addVareTilIndkoebsliste(tempVare, 2, 0);
+
+        cursor2.moveToNext();
+        tempVare = Integer.parseInt(cursor2.getString(cursor2.getColumnIndex("_id")));
         addVareTilIndkoebsliste(tempVare, 3, 1);
     }
 
@@ -188,15 +190,12 @@ public class Storage {
         return db.query("INDKOEBSLISTE",null,null,null,null,null,null);
     }
 
-    public void removeVareFraIndkoebsliste(int id) {
-
-        public static void setIsCheckedOfIndkoebsliste(int id, boolean isChecked) {
+    public static void setIsCheckedOfIndkoebsliste(int id, boolean isChecked) {
         int newIsChecked = isChecked ? 0 : 1;
 
-            ContentValues butikValues = new ContentValues();
-            butikValues.put("ISCHECKED", newIsChecked);
-            db.update("INDKOEBSLISTE", butikValues, "_id=?", new String[]{id + ""});
-
+        ContentValues butikValues = new ContentValues();
+        butikValues.put("ISCHECKED", newIsChecked);
+        db.update("INDKOEBSLISTE", butikValues, "_id=?", new String[]{id + ""});
     }
 
     public static void removeVareFraIndkoebsliste(int id) {

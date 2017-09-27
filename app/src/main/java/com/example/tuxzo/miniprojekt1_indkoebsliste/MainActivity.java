@@ -4,11 +4,9 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
-import android.database.CursorIndexOutOfBoundsException;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -38,9 +36,7 @@ public class MainActivity extends AppCompatActivity {
             this.id = id;
         }
 
-        public Vare getVare() {
-            return vare;
-        }
+        public Vare getVare() { return vare; }
 
         public int getId() { return id; }
 
@@ -61,10 +57,8 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         Cursor vCursor = storage.getVarerIListe();
-
         ArrayList<IndkoebslisteVare> vArrayList = new ArrayList<IndkoebslisteVare>();
         for(vCursor.moveToFirst(); !vCursor.isAfterLast(); vCursor.moveToNext()) {
-            Log.d("ischecked", vCursor.getColumnIndex("ISCHECKED") + "");
             IndkoebslisteVare tempVare = new IndkoebslisteVare(
                     storage.getVare(vCursor.getInt(vCursor.getColumnIndex("VARE_ID"))),
                     vCursor.getInt(vCursor.getColumnIndex("ISCHECKED")),
@@ -73,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         ListView lvIndkoebsListe = (ListView) findViewById(R.id.lvIndkoebsliste);
-        ArrayAdapter<IndkoebslisteVare> listAdapter = new CustomListAdapter(this, vArrayList);
+        ArrayAdapter<IndkoebslisteVare> listAdapter = new CustomListAdapter(MainActivity.this, vArrayList);
         lvIndkoebsListe.setAdapter(listAdapter);
 
         // Udregning af totalpris
