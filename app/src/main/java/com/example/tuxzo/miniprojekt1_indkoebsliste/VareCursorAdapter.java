@@ -70,12 +70,16 @@ public class VareCursorAdapter extends SimpleCursorAdapter {
                 TextView tv = (TextView) view.findViewById(R.id.textMaengde);
                 int antal = Integer.parseInt((String) tv.getText());
 
-                Toast.makeText(context, "Tilføjet: " + antal + " stk " +
-                        cursor.getString(cursor.getColumnIndex("NAME")) +
-                        " til " + antal * cursor.getDouble(cursor.getColumnIndex("NORMALPRIS")) +
-                        " kr", Toast.LENGTH_SHORT).show();
+                if(antal > 0) {
+                    Toast.makeText(context, "Tilføjet: " + antal + " stk " +
+                            cursor.getString(cursor.getColumnIndex("NAME")) +
+                            " til " + antal * cursor.getDouble(cursor.getColumnIndex("NORMALPRIS")) +
+                            " kr", Toast.LENGTH_SHORT).show();
 
-                MainActivity.storage.addVareTilIndkoebsliste(vareId, antal , 0);
+                    MainActivity.storage.addVareTilIndkoebsliste(vareId, antal, 0);
+                }
+                else          Toast.makeText(context, "Du kan ikke købe 0 af en vare" , Toast.LENGTH_SHORT).show();
+
             }
         });
 
