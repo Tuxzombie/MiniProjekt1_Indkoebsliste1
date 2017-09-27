@@ -11,22 +11,12 @@ import android.util.Log;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
-//    private static DatabaseHelper sInstance;
-
     private static final String DB_NAME = "miniprojekt1"; // the name of our database
     private static final int DB_VERSION = 1; // the version of the database
 
     public DatabaseHelper(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
     }
-
-//    public static synchronized DatabaseHelper getInstance(Context context) {
-//          if (sInstance == null) {
-//            sInstance = new DatabaseHelper(context.getApplicationContext());
-//        }
-//        Log.d("DB: ", sInstance.toString());
-//        return sInstance;
-//    }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
@@ -55,6 +45,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     + "VARE_ID INTEGER, "
                     + "ANTAL INTEGER, "
                     + "ISCHECKED INTEGER);");
+
 
     }
 }

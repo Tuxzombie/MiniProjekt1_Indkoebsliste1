@@ -17,9 +17,7 @@ public class Storage {
 
     private Storage(Context context) {
         db = new DatabaseHelper(context).getWritableDatabase();
-        createButikker();
-        createVarer();
-        insertVarerIIndkoebsliste();
+
     }
 
     public static synchronized Storage getInstance(Context context) {
@@ -205,6 +203,15 @@ public class Storage {
     public void destroy()
     {
         db.close();
+    }
+
+    public boolean isDatabaseEmpty()
+    {
+        Cursor c = getButikker();
+        c.moveToFirst();
+
+        if(c.getCount()>0) return false;
+        else return true;
     }
 }
 

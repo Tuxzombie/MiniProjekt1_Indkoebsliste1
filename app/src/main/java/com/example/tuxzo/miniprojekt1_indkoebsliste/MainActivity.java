@@ -53,6 +53,13 @@ public class MainActivity extends AppCompatActivity {
 
         storage = Storage.getInstance(getApplicationContext());
 
+        if(storage.isDatabaseEmpty())
+        {
+            storage.createButikker();
+            storage.createVarer();
+            storage.insertVarerIIndkoebsliste();
+        }
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarIndkoebsliste);
         setSupportActionBar(toolbar);
 
