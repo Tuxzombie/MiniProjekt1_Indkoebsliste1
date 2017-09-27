@@ -147,11 +147,11 @@ public class Storage {
 //        db.update("BUTIK", vareValues, "_id=?", new String[]{_id+""});
 //    }
 //
-    public static void addVareTilIndkoebsliste(int id, int antal) {
+    public static void addVareTilIndkoebsliste(int id, int antal, int isChecked) {
         ContentValues vareValue = new ContentValues();
         vareValue.put("VARE_ID", id);
         vareValue.put("ANTAL", antal);
-        vareValue.put("ISCHECKED", 0);
+        vareValue.put("ISCHECKED", isChecked);
         db.insert("INDKOEBSLISTE", null, vareValue);
     }
 
@@ -166,11 +166,21 @@ public class Storage {
         cursor2.moveToFirst();
         int tempVare = Integer.parseInt(cursor.getString(cursor2.getColumnIndex("_id")));
 
-        addVareTilIndkoebsliste(tempVare, 2);
+        addVareTilIndkoebsliste(tempVare, 2, 0);
+        addVareTilIndkoebsliste(tempVare, 3, 1);
     }
 
     public static Cursor getVarerIListe() {
         return db.query("INDKOEBSLISTE",null,null,null,null,null,null);
+    }
+
+    public static void setIsCheckedOfIndkoebsliste(int id, boolean isChecked) {
+        int newIsChecked = isChecked ? 0 : 1;
+
+            ContentValues butikValues = new ContentValues();
+            butikValues.put("ISCHECKED", newIsChecked);
+            db.update("INDKOEBSLISTE", butikValues, "_id=?", new String[]{id + ""});
+
     }
 
     public static void removeVareFraIndkoebsliste(int id) {
