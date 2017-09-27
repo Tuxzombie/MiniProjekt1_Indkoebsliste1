@@ -1,27 +1,20 @@
 package com.example.tuxzo.miniprojekt1_indkoebsliste;
 
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
-import android.database.sqlite.SQLiteOpenHelper;
+import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.ContextMenu;
+import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
-import android.widget.TextView;
 import android.widget.Toast;
-
-import static com.example.tuxzo.miniprojekt1_indkoebsliste.MainActivity.storage;
 
 public class VarerActivity extends AppCompatActivity {
     public static final String EXTRA_BUTIK_ID = "butikId";
@@ -41,12 +34,10 @@ public class VarerActivity extends AppCompatActivity {
 
         int butikId = Integer.parseInt(getIntent().getStringExtra(EXTRA_BUTIK_ID));
         setContentView(R.layout.activity_varer);
-        // ActionBar actionBar = getSupportActionBar();
-       // actionBar.setDisplayHomeAsUpEnabled(true);
-        //actionBar.setTitle("Varer i " + Storage.getButik(butikId).getName());
-        storage.createVarer();
-
-
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarVare);
+        setSupportActionBar(toolbar);
+        ActionBar ab = getSupportActionBar();
+        ab.setDisplayHomeAsUpEnabled(true);
 
         //================================================================================
         // VARELISTE POPULATE
@@ -74,6 +65,24 @@ public class VarerActivity extends AppCompatActivity {
     //================================================================================
     // CONTEXT MENU
     //================================================================================
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_tilIndkoebsliste:
+                Intent intent = new Intent(this, MainActivity.class);
+                startActivity(intent);
+                return true;
+            default:
+                return false;
+        }
+    }
+
+
+    @Override
+    public boolean onPrepareOptionsMenu(final Menu menu) {
+        getMenuInflater().inflate(R.menu.toolbar_vare, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
 
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v,

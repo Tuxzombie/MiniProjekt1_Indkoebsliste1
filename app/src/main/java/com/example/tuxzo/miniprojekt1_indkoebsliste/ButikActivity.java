@@ -3,10 +3,13 @@ package com.example.tuxzo.miniprojekt1_indkoebsliste;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -27,7 +30,10 @@ public class ButikActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_butik);
 
-//        getSupportActionBar().setTitle("Liste Over Butikker");
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarButik);
+        setSupportActionBar(toolbar);
+        ActionBar ab = getSupportActionBar();
+        ab.setDisplayHomeAsUpEnabled(true);
 
         listView = (ListView) findViewById(R.id.listButikker);
 
@@ -53,6 +59,12 @@ public class ButikActivity extends AppCompatActivity {
 
         registerForContextMenu(listView);
 
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(final Menu menu) {
+        getMenuInflater().inflate(R.menu.toolbar_butik, menu);
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override

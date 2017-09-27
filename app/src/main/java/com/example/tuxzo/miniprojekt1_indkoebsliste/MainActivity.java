@@ -5,8 +5,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -62,6 +64,8 @@ public class MainActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarIndkoebsliste);
         setSupportActionBar(toolbar);
+        ActionBar ab = getSupportActionBar();
+        ab.setDisplayHomeAsUpEnabled(false);
 
         Cursor vCursor = storage.getVarerIListe();
         ArrayList<IndkoebslisteVare> vArrayList = new ArrayList<IndkoebslisteVare>();
@@ -86,12 +90,6 @@ public class MainActivity extends AppCompatActivity {
         TextView tvTotalPris = (TextView) findViewById(R.id.tvTotalPris);
         tvTotalPris.setText(totalPris + " kr.");
 
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        storage.destroy();
     }
 
     @Override
@@ -139,6 +137,7 @@ public class MainActivity extends AppCompatActivity {
             cbErKoebt.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                         @Override
                         public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                            Log.d("Select", "bip boop");
                             storage.setIsCheckedOfIndkoebsliste(varer.get(position).getId(), b);
                         }
                     });
