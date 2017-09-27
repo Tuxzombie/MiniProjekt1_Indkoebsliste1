@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -31,11 +30,13 @@ public class MainActivity extends AppCompatActivity {
         private Vare vare;
         private int isChecked;
         private int id;
+        private int antal;
 
-        private IndkoebslisteVare(Vare vare, int isChecked, int id) {
+        private IndkoebslisteVare(Vare vare, int isChecked, int id, int antal) {
             this.vare = vare;
             this.isChecked = isChecked;
             this.id = id;
+            this.antal = antal;
         }
 
         public Vare getVare() { return vare; }
@@ -46,6 +47,8 @@ public class MainActivity extends AppCompatActivity {
             if(this.isChecked == 0) return false;
             else return true;
         }
+
+        public int getAntal() { return antal; }
     }
 
     @Override
@@ -73,7 +76,8 @@ public class MainActivity extends AppCompatActivity {
             IndkoebslisteVare tempVare = new IndkoebslisteVare(
                     storage.getVare(vCursor.getInt(vCursor.getColumnIndex("VARE_ID"))),
                     vCursor.getInt(vCursor.getColumnIndex("ISCHECKED")),
-                    vCursor.getInt(vCursor.getColumnIndex("_id")));
+                    vCursor.getInt(vCursor.getColumnIndex("_id")),
+                    vCursor.getInt(vCursor.getColumnIndex("ANTAL")));
             vArrayList.add(tempVare);
         }
 
@@ -84,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
         // Udregning af totalpris
         double totalPris = 0;
         for (int i = 0; i < vArrayList.size(); i ++) {
-            totalPris += vArrayList.get(i).getVare().getNormalPris();
+            totalPris += vArrayList.get(i).getVare().getNormalPris() * vArrayList.get(i).getAntal();
         }
 
         TextView tvTotalPris = (TextView) findViewById(R.id.tvTotalPris);
@@ -130,14 +134,14 @@ public class MainActivity extends AppCompatActivity {
             TextView tvPris = (TextView) rowView.findViewById(R.id.tvPris);
             final CheckBox cbErKoebt = (CheckBox) rowView.findViewById(R.id.cbErKoebt);
 
-            tvNavn.setText(varer.get(position).getVare().getName());
-            tvPris.setText(varer.get(position).getVare().getNormalPris() + "");
+            Vare tempVare = varer.get(position).getVare();
+            tvNavn.setText(varer.get(position).getAntal() + " x " + tempVare.getName());
+            tvPris.setText(tempVare.getNormalPris() * varer.get(position).getAntal() + "");
             cbErKoebt.setChecked(varer.get(position).isChecked());
 
             cbErKoebt.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                         @Override
                         public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                            Log.d("Select", "bip boop");
                             storage.setIsCheckedOfIndkoebsliste(varer.get(position).getId(), b);
                         }
                     });

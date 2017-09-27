@@ -68,6 +68,16 @@ public class ButikActivity extends AppCompatActivity {
     }
 
     @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_tiloejNy:
+                createCreateAlertDialog().show();
+            default:
+                return false;
+        }
+    }
+
+    @Override
     public void onCreateContextMenu(ContextMenu menu, View v,
                                     ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
@@ -93,6 +103,36 @@ public class ButikActivity extends AppCompatActivity {
         }
     }
 
+    private AlertDialog createCreateAlertDialog()
+    {
+        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = this.getLayoutInflater();
+        View editView = inflater.inflate(R.layout.dialog_redigerbutik, null);
+        alertBuilder.setView(editView);
+
+        final EditText butikName = (EditText) editView.findViewById(R.id.butikName);
+        final EditText butikAdresse = (EditText) editView.findViewById(R.id.butikAdresse);
+        final EditText butikHomepage = (EditText) editView.findViewById(R.id.butikHomepage);
+
+        alertBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                Butik tempButik = new Butik(butikName.getText().toString(), butikAdresse.getText().toString(),butikHomepage.getText().toString());
+                storage.addButik(tempButik);
+                listAdapter.changeCursor(storage.getButikker());
+            }
+        });
+        alertBuilder.setNegativeButton("Annuller", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                // User cancelled the dialog
+            }
+        });
+        alertBuilder.setMessage("Rediger Butik");
+        AlertDialog dialog = alertBuilder.create();
+
+        return dialog;
+    }
+
+
     private AlertDialog createEditAlertDialog(int _id, final Butik butik)
     {
         final int butik_id = _id;
@@ -100,7 +140,6 @@ public class ButikActivity extends AppCompatActivity {
         LayoutInflater inflater = this.getLayoutInflater();
         View editView = inflater.inflate(R.layout.dialog_redigerbutik, null);
         alertBuilder.setView(editView);
-
 
         final EditText butikName = (EditText) editView.findViewById(R.id.butikName);
         final EditText butikAdresse = (EditText) editView.findViewById(R.id.butikAdresse);
@@ -120,7 +159,7 @@ public class ButikActivity extends AppCompatActivity {
                 listAdapter.changeCursor(storage.getButikker());
             }
         });
-        alertBuilder.setNegativeButton("Annuler", new DialogInterface.OnClickListener() {
+        alertBuilder.setNegativeButton("Annuller", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 // User cancelled the dialog
             }
