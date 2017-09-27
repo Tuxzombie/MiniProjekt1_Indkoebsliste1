@@ -1,17 +1,21 @@
 package com.example.tuxzo.miniprojekt1_indkoebsliste;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.sqlite.SQLiteException;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.ContextMenu;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Toast;
@@ -66,12 +70,44 @@ public class VarerActivity extends AppCompatActivity {
     // CONTEXT MENU
     //================================================================================
 
+
+    private AlertDialog createVareAlertDialog()
+    {
+        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = this.getLayoutInflater();
+        View editView = inflater.inflate(R.layout.dialog_opretvare, null);
+        alertBuilder.setView(editView);
+
+        final EditText nyVareNavn = (EditText) editView.findViewById(R.id.nyVareNavn);
+        final EditText nyVarePris = (EditText) editView.findViewById(R.id.nyVarePris);
+        final int butikId =  Integer.parseInt(getIntent().getStringExtra(EXTRA_BUTIK_ID));
+
+        alertBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                Vare tempVare = new Vare(nyVareNavn.getText() + "",Double.parseDouble(nyVarePris.getText() + ""), 0, butikId);
+                storage.addVare(tempVare);
+                listAdapter.changeCursor(storage.getVarer(butikId));
+            }
+        });
+        alertBuilder.setNegativeButton("Annuller", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                // User cancelled the dialog
+            }
+        });
+        alertBuilder.setMessage("Opret vare");
+        AlertDialog dialog = alertBuilder.create();
+
+        return dialog;
+    }
+
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_tilIndkoebsliste:
                 Intent intent = new Intent(this, MainActivity.class);
                 startActivity(intent);
                 return true;
+            case R.id.action_tiloejNyVare:
+                createVareAlertDialog().show();
             default:
                 return false;
         }
