@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ListView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
@@ -25,6 +26,29 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
 
     public static Storage storage;
+
+    private class IndkoebslisteVare {
+        private Vare vare;
+        private int isChecked;
+        private int id;
+
+        private IndkoebslisteVare(Vare vare, int isChecked, int id) {
+            this.vare = vare;
+            this.isChecked = isChecked;
+            this.id = id;
+        }
+
+        public Vare getVare() {
+            return vare;
+        }
+
+        public int getId() { return id; }
+
+        public boolean isChecked() {
+            if(this.isChecked == 0) return false;
+            else return true;
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,26 +62,24 @@ public class MainActivity extends AppCompatActivity {
 
         Cursor vCursor = storage.getVarerIListe();
 
-        //TODO: Hej Jeppe, der er BinLaden med din cursor
-        ArrayList<Vare> vArrayList = new ArrayList<Vare>();
-        try {
-            for(vCursor.moveToFirst(); !vCursor.isAfterLast(); vCursor.moveToNext()) {
-                Vare tempVare = storage.getVare(vCursor.getColumnIndex("VARE_ID"));
-                vArrayList.add(tempVare);
-            }
-        } catch (CursorIndexOutOfBoundsException e)
-        {
-            Log.d("Wrongness", e.getMessage());
+        ArrayList<IndkoebslisteVare> vArrayList = new ArrayList<IndkoebslisteVare>();
+        for(vCursor.moveToFirst(); !vCursor.isAfterLast(); vCursor.moveToNext()) {
+            Log.d("ischecked", vCursor.getColumnIndex("ISCHECKED") + "");
+            IndkoebslisteVare tempVare = new IndkoebslisteVare(
+                    storage.getVare(vCursor.getInt(vCursor.getColumnIndex("VARE_ID"))),
+                    vCursor.getInt(vCursor.getColumnIndex("ISCHECKED")),
+                    vCursor.getInt(vCursor.getColumnIndex("_id")));
+            vArrayList.add(tempVare);
         }
 
         ListView lvIndkoebsListe = (ListView) findViewById(R.id.lvIndkoebsliste);
-        ArrayAdapter<Vare> listAdapter = new CustomListAdapter(this, vArrayList);
+        ArrayAdapter<IndkoebslisteVare> listAdapter = new CustomListAdapter(this, vArrayList);
         lvIndkoebsListe.setAdapter(listAdapter);
 
         // Udregning af totalpris
         double totalPris = 0;
         for (int i = 0; i < vArrayList.size(); i ++) {
-            totalPris += vArrayList.get(i).getNormalPris();
+            totalPris += vArrayList.get(i).getVare().getNormalPris();
         }
 
         TextView tvTotalPris = (TextView) findViewById(R.id.tvTotalPris);
@@ -89,44 +111,51 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public class CustomListAdapter extends ArrayAdapter<Vare> {
-        private ArrayList<Vare> varer;
+    public class CustomListAdapter extends ArrayAdapter<IndkoebslisteVare> {
+        private ArrayList<IndkoebslisteVare> varer;
         private final Activity context;
 
-        public CustomListAdapter(Activity context, ArrayList<Vare> varer) {
+        public CustomListAdapter(Activity context, ArrayList<IndkoebslisteVare> varer) {
             super(context, R.layout.item_indkoebsliste, varer);
             this.context=context;
             this.varer = varer;
         }
 
         @Override
-        public View getView(int position, final View convertView, ViewGroup parent) {
+        public View getView(final int position, final View convertView, ViewGroup parent) {
             LayoutInflater inflater = (LayoutInflater) context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             final View rowView = inflater.inflate(R.layout.item_indkoebsliste, parent, false);
 
             TextView tvNavn = (TextView) rowView.findViewById(R.id.tvVare);
             TextView tvPris = (TextView) rowView.findViewById(R.id.tvPris);
-            CheckBox cbErKoebt = (CheckBox) rowView.findViewById(R.id.cbErKoebt);
+            final CheckBox cbErKoebt = (CheckBox) rowView.findViewById(R.id.cbErKoebt);
 
-            tvNavn.setText(varer.get(position).getName());
-            tvPris.setText(varer.get(position).getNormalPris() + "");
-            cbErKoebt.setSelected(false);
+            tvNavn.setText(varer.get(position).getVare().getName());
+            tvPris.setText(varer.get(position).getVare().getNormalPris() + "");
+            cbErKoebt.setChecked(varer.get(position).isChecked());
 
-            rowView.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View v) {
-                    final PopupMenu popup = new PopupMenu(rowView.getContext(), v);
-                    popup.getMenuInflater().inflate(R.menu.popup_indkoebsliste, popup.getMenu());
-                    popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                        public boolean onMenuItemClick(MenuItem item) {
+            cbErKoebt.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                        @Override
+                        public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                            storage.setIsCheckedOfIndkoebsliste(varer.get(position).getId(), b);
+                        }
+                    });
+
+                    rowView.setOnLongClickListener(new View.OnLongClickListener() {
+                        @Override
+                        public boolean onLongClick(View v) {
+                            final PopupMenu popup = new PopupMenu(rowView.getContext(), v);
+                            popup.getMenuInflater().inflate(R.menu.popup_indkoebsliste, popup.getMenu());
+                            popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                                public boolean onMenuItemClick(MenuItem item) {
+                                    return true;
+                                }
+                            });
+                            popup.show();
                             return true;
                         }
                     });
-                    popup.show();
-                    return true;
-                }
-            });
 
             return rowView;
         };
