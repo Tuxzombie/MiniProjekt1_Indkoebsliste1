@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 /**
  * Created by tuxzo on 21-09-2017.
@@ -12,12 +13,24 @@ import android.database.sqlite.SQLiteDatabase;
 public class Storage {
 
     private static SQLiteDatabase db;
+    private static Storage sInstance;
 
-    public Storage(Context context) {
-        db = DatabaseHelper.getInstance(context).getWritableDatabase();
+    private Storage(Context context) {
+        db = new DatabaseHelper(context).getWritableDatabase();
+        createButikker();
+        createVarer();
+        insertVarerIIndkoebsliste();
     }
 
-    public static void createButikker() {
+    public static synchronized Storage getInstance(Context context) {
+        if (sInstance == null) {
+            sInstance = new Storage(context.getApplicationContext());
+        }
+        Log.d("DB: ", sInstance.toString());
+        return sInstance;
+    }
+
+    public void createButikker() {
         db.delete("BUTIK", null, null);
 
         addButik(new Butik("Rema 100", "Holme Byvej 15, 8270 Højbjerg", "http://www.rema1000.dk/"));
@@ -26,11 +39,11 @@ public class Storage {
         addButik(new Butik("LIDL", "Christian X's Vej 112, 8260 Viby", "http://www.LIDL.dk/"));
     }
 
-    public static Cursor getButikker() {
+    public Cursor getButikker() {
         return db.query("BUTIK", null, null, null, null, null, null);
     }
 
-    public static Butik getButik(int _id) {
+    public Butik getButik(int _id) {
         Cursor butikCursor = db.query("BUTIK",
                 new String[]{"NAME", "ADRESSE", "HOMEPAGE"},
                 "_id=?",
@@ -43,7 +56,7 @@ public class Storage {
         return butik;
     }
 
-    public static void addButik(Butik butik) {
+    public void addButik(Butik butik) {
         ContentValues butikValues = new ContentValues();
         butikValues.put("NAME", butik.getName());
         butikValues.put("ADRESSE", butik.getAdresse());
@@ -51,7 +64,7 @@ public class Storage {
         db.insert("BUTIK", null, butikValues);
     }
 
-    public static void removeButik(int _id) {
+    public void removeButik(int _id) {
         db.delete("BUTIK", "_id =" + _id, null);
 
         Cursor cursor = getVarer(_id);
@@ -64,7 +77,7 @@ public class Storage {
         }
     }
 
-    public static void updateButik(int _id, Butik butik) {
+    public void updateButik(int _id, Butik butik) {
         ContentValues butikValues = new ContentValues();
         butikValues.put("NAME", butik.getName());
         butikValues.put("ADRESSE", butik.getAdresse());
@@ -73,8 +86,9 @@ public class Storage {
     }
 
     //
-    public static void createVarer() {
+    public void createVarer() {
         db.delete("VARE", null, null);
+
         Cursor cursor = getButikker();
         cursor.moveToFirst();
 
@@ -104,12 +118,12 @@ public class Storage {
         addVare(new Vare("LEGO Elves dragedronningens redning", 649.00, 20,temp));
     }
 //
-    public static Cursor getVarer(int butiksId)
+    public Cursor getVarer(int butiksId)
     {
         return db.query("VARE",null,"BUTIK_ID = ?",new String[] {butiksId + ""},null,null,null);
     }
 
-    public static Vare getVare(int _id)
+    public Vare getVare(int _id)
     {
         Cursor vareCursor = db.query("VARE",
                 new String[]{"NAME", "NORMALPRIS", "MAENGDE", "BUTIK_ID"},
@@ -123,7 +137,7 @@ public class Storage {
        return vare;
     }
 
-    public static void addVare(Vare vare) {
+    public void addVare(Vare vare) {
         ContentValues vareValues = new ContentValues();
         vareValues.put("NAME", vare.getName());
         vareValues.put("NORMALPRIS", vare.getNormalPris());
@@ -133,7 +147,7 @@ public class Storage {
         db.insert("VARE", null, vareValues);
     }
 
-    public static void removeVare(int _id)
+    public void removeVare(int _id)
     {
         db.delete("VARE", "_id ="+_id, null);
     }
@@ -147,7 +161,7 @@ public class Storage {
 //        db.update("BUTIK", vareValues, "_id=?", new String[]{_id+""});
 //    }
 //
-    public static void addVareTilIndkoebsliste(int id, int antal) {
+    public void addVareTilIndkoebsliste(int id, int antal) {
         ContentValues vareValue = new ContentValues();
         vareValue.put("VARE_ID", id);
         vareValue.put("ANTAL", antal);
@@ -155,7 +169,7 @@ public class Storage {
         db.insert("INDKOEBSLISTE", null, vareValue);
     }
 
-    public static void insertVarerIIndkoebsliste() {
+    public void insertVarerIIndkoebsliste() {
         db.delete("INDKOEBSLISTE",null,null);
 
         Cursor cursor = getButikker();
@@ -169,12 +183,17 @@ public class Storage {
         addVareTilIndkoebsliste(tempVare, 2);
     }
 
-    public static Cursor getVarerIListe() {
+    public Cursor getVarerIListe() {
         return db.query("INDKOEBSLISTE",null,null,null,null,null,null);
     }
 
-    public static void removeVareFraIndkoebsliste(int id) {
+    public void removeVareFraIndkoebsliste(int id) {
         db.delete("INDKOEBSLISTE", "VARE_ID =" + id, null);
+    }
+
+    public void destroy()
+    {
+        db.close();
     }
 }
 

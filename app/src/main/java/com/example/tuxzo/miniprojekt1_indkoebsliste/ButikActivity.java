@@ -68,12 +68,12 @@ public class ButikActivity extends AppCompatActivity {
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
         switch (item.getItemId()) {
             case R.id.item_delete:
-                Storage.removeButik((int)info.id);
-                listAdapter.changeCursor(Storage.getButikker());
+                storage.removeButik((int)info.id);
+                listAdapter.changeCursor(storage.getButikker());
 //                Toast.makeText(this, "Delete", Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.item_edit:
-                createEditAlertDialog((int)info.id, Storage.getButik((int)info.id)).show();
+                createEditAlertDialog((int)info.id, storage.getButik((int)info.id)).show();
 //                Toast.makeText(this, "Edit", Toast.LENGTH_SHORT).show();
                 return true;
             default:
@@ -104,8 +104,8 @@ public class ButikActivity extends AppCompatActivity {
                 butik.setAdresse(butikAdresse.getText().toString());
                 butik.setHomepage(butikHomepage.getText().toString());
 
-                Storage.updateButik(butik_id, butik);
-                listAdapter.changeCursor(Storage.getButikker());
+                storage.updateButik(butik_id, butik);
+                listAdapter.changeCursor(storage.getButikker());
             }
         });
         alertBuilder.setNegativeButton("Annuler", new DialogInterface.OnClickListener() {

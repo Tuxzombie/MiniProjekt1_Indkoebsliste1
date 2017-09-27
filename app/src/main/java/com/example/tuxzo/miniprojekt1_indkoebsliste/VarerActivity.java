@@ -21,6 +21,8 @@ import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import static com.example.tuxzo.miniprojekt1_indkoebsliste.MainActivity.storage;
+
 public class VarerActivity extends AppCompatActivity {
     public static final String EXTRA_BUTIK_ID = "butikId";
 
@@ -56,7 +58,7 @@ public class VarerActivity extends AppCompatActivity {
         try {
             listAdapter = new VareCursorAdapter(this,
                     R.layout.list_varer_layout,
-                    Storage.getVarer(butikId),
+                    storage.getVarer(butikId),
                     new String[]{"NAME", "NORMALPRIS"},
                     new int[]{R.id.vareNavnText, R.id.varePrisText}, 0);
 
@@ -86,8 +88,8 @@ public class VarerActivity extends AppCompatActivity {
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
         switch (item.getItemId()) {
             case R.id.item_delete:
-                Storage.removeButik((int)info.id);
-                listAdapter.changeCursor(Storage.getButikker());
+                storage.removeButik((int)info.id);
+                listAdapter.changeCursor(storage.getButikker());
 //                Toast.makeText(this, "Delete", Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.item_edit:

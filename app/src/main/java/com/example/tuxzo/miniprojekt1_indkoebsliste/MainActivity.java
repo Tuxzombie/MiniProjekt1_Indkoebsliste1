@@ -4,9 +4,11 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.database.CursorIndexOutOfBoundsException;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -29,21 +31,23 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        storage = new Storage(getApplicationContext());
-
-        Storage.createButikker();
-        Storage.createVarer();
-        Storage.insertVarerIIndkoebsliste();
+        storage = Storage.getInstance(getApplicationContext());
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarIndkoebsliste);
         setSupportActionBar(toolbar);
 
         Cursor vCursor = storage.getVarerIListe();
 
+        //TODO: Hej Jeppe, der er BinLaden med din cursor
         ArrayList<Vare> vArrayList = new ArrayList<Vare>();
-        for(vCursor.moveToFirst(); !vCursor.isAfterLast(); vCursor.moveToNext()) {
-            Vare tempVare = storage.getVare(vCursor.getColumnIndex("VARE_ID"));
-            vArrayList.add(tempVare);
+        try {
+            for(vCursor.moveToFirst(); !vCursor.isAfterLast(); vCursor.moveToNext()) {
+                Vare tempVare = storage.getVare(vCursor.getColumnIndex("VARE_ID"));
+                vArrayList.add(tempVare);
+            }
+        } catch (CursorIndexOutOfBoundsException e)
+        {
+            Log.d("Wrongness", e.getMessage());
         }
 
         ListView lvIndkoebsListe = (ListView) findViewById(R.id.lvIndkoebsliste);
@@ -59,6 +63,12 @@ public class MainActivity extends AppCompatActivity {
         TextView tvTotalPris = (TextView) findViewById(R.id.tvTotalPris);
         tvTotalPris.setText(totalPris + " kr.");
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        storage.destroy();
     }
 
     @Override
