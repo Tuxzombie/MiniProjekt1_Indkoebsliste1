@@ -101,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
 
             tvNavn.setText(varer.get(position).getName());
             tvPris.setText(varer.get(position).getNormalPris() + "");
-            cbErKoebt.setSelected(false); // TODO
+            cbErKoebt.setSelected(false);
 
             rowView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
