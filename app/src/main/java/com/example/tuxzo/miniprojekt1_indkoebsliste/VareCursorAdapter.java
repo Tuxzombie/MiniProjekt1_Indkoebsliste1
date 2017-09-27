@@ -3,10 +3,12 @@ package com.example.tuxzo.miniprojekt1_indkoebsliste;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * Created by PWM on 26-09-17.
@@ -15,11 +17,13 @@ import android.widget.TextView;
 public class VareCursorAdapter extends SimpleCursorAdapter {
     public VareCursorAdapter(Context context, int layout, Cursor c, String[] from, int[] to, int flags) {
         super(context, layout, c, from, to, flags);
+
     }
 
     @Override
-    public void bindView(final View view, Context context, Cursor cursor) {
+    public void bindView(final View view, final Context context, final Cursor cursor) {
         super.bindView(view, context, cursor);
+
 
         //================================================================================
         // MINUS_BTN EVENTHANDLER:
@@ -54,11 +58,19 @@ public class VareCursorAdapter extends SimpleCursorAdapter {
         //================================================================================
         // TILFOEJ_BTN EVENTHANDLER:
         //================================================================================
+        final int denCursorViSkalBruge = cursor.getPosition();
         Button tilfoejBtn = (Button) view.findViewById(R.id.btnTilfoej);
         tilfoejBtn.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO - Funktionaliteten skal lige fastsættes.
+
+                cursor.moveToPosition(denCursorViSkalBruge);
+                int vareId = cursor.getInt(cursor.getColumnIndex("_id"));
+
+                TextView tv = (TextView) view.findViewById(R.id.textMaengde);
+                int antal = Integer.parseInt((String) tv.getText());
+
+                MainActivity.storage.addVareTilIndkoebsliste(vareId, antal , 0);
             }
         });
 
