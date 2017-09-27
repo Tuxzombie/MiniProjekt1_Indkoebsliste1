@@ -193,9 +193,9 @@ public class Storage {
     public static void setIsCheckedOfIndkoebsliste(int id, boolean isChecked) {
         int newIsChecked = isChecked ? 0 : 1;
 
-        ContentValues butikValues = new ContentValues();
-        butikValues.put("ISCHECKED", newIsChecked);
-        db.update("INDKOEBSLISTE", butikValues, "_id=?", new String[]{id + ""});
+        ContentValues newContentVal = new ContentValues();
+        newContentVal.put("ISCHECKED", newIsChecked);
+        db.update("INDKOEBSLISTE", newContentVal, "_id=?", new String[]{id + ""});
     }
 
     public static void removeVareFraIndkoebsliste(int id) {

@@ -16,7 +16,9 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ButikActivity">
+        <activity
+            android:name=".ButikActivity"
+            android:parentActivityName=".MainActivity">
 
         </activity>
 
